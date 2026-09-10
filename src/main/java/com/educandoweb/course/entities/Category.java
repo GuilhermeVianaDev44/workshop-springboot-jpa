@@ -1,8 +1,9 @@
-package com.educandoweb.course.enities;
+package com.educandoweb.course.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -10,33 +11,30 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_payment")
-public class Payment implements Serializable{
+@Table(name = "tb_category")
+public class Category implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Instant moment;
+	private String name;
 	
 	@JsonIgnore
-	@OneToOne
-	@MapsId
-	private Order order;
+	@ManyToMany(mappedBy = "categories")
+	private Set<Product> products = new HashSet<>();
 	
-	public Payment() {
-		
+	public Category() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public Payment(Long id, Instant moment, Order order) {
+	public Category(Long id, String name) {
 		this.id = id;
-		this.moment = moment;
-		this.order = order;
+		this.name = name;
 	}
 
 	public Long getId() {
@@ -47,20 +45,12 @@ public class Payment implements Serializable{
 		this.id = id;
 	}
 
-	public Instant getMoment() {
-		return moment;
+	public String getName() {
+		return name;
 	}
 
-	public void setMoment(Instant moment) {
-		this.moment = moment;
-	}
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -68,6 +58,11 @@ public class Payment implements Serializable{
 		return Objects.hash(id);
 	}
 
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -76,10 +71,8 @@ public class Payment implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Payment other = (Payment) obj;
+		Category other = (Category) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
+
 }

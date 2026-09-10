@@ -1,10 +1,10 @@
-package com.educandoweb.course.enities.pk;
+package com.educandoweb.course.entities.pk;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.educandoweb.course.enities.Order;
-import com.educandoweb.course.enities.Product;
+import com.educandoweb.course.entities.Order;
+import com.educandoweb.course.entities.Product;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
